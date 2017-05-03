@@ -45,6 +45,11 @@ function install_programs {
 	then
 		pacman -S --noconfirm qemu qemu-arch-extra libvirt git make cmake curl
 	fi
+
+	if [ $OS == "Fedora" ]
+	then
+		dnf install qemu qemu-system-* make cmake curl
+	fi
 }
 
 #retrieve OS

@@ -13,4 +13,4 @@ RUN touch /root/.ssh/known_hosts
 RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
 
 RUN cd && git clone git@bitbucket.org:BramVlerick/clickshare-virt-env.git test_env
-RUN sh /root/test_env/install-programs.sh
+RUN bash /root/test_env/install-programs.sh

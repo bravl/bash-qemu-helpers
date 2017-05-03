@@ -48,7 +48,7 @@ function install_programs {
 
 	if [ $OS == "Fedora" ]
 	then
-		dnf install qemu qemu-system-* make cmake curl
+		dnf install -y qemu qemu-system-* make cmake curl
 	fi
 }
 

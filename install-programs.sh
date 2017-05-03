@@ -12,21 +12,21 @@ function check_root {
 function get_os {
 	echo "Installing Programs"
 	echo "Checking OS"
-	dnf 2> /dev/null
+	dnf > /dev/null
 	if [ $? -eq 1 ] 
 	then
 		echo "Fedora detected";
 		OS="Fedora"
 	fi
 
-	apt-get 2> /dev/null
+	apt-get > /dev/null
 	if [ $? -eq 1 ] 
 	then
 		echo "Ubuntu detected";
 		OS="Ubuntu"
 	fi
 
-	pacman 2> /dev/null
+	pacman > /dev/null
 	if [ $? -eq 1 ]
 	then
 		echo "Arch Linux detected";

@@ -2,6 +2,18 @@
 
 OS="Invalid"
 
+function install_docker {
+	if [ $OS == "Fedora" ]; then
+		dnf install -y docker
+	elif [ $OS == "Arch" ]; then
+		pacman -S docker --noconfirm --needed
+	elif [ $OS == "Ubuntu" ]; then
+		apt-get install -y docker
+	else
+		echo "Invalid OS"
+	fi
+}
+
 function check_root {
 	if [ $(id -u) != "0" ]; then
 		echo "This script must be run as root"
@@ -43,7 +55,7 @@ function get_os {
 function install_programs {
 	if [ $OS == "Arch" ]
 	then
-		pacman -S --noconfirm qemu qemu-arch-extra libvirt git make cmake curl
+		pacman -S --noconfirm --needed qemu qemu-arch-extra libvirt git make cmake curl
 	fi
 
 	if [ $OS == "Fedora" ]
@@ -57,7 +69,7 @@ function install_programs {
 	fi
 }
 
-#retrieve OS
 check_root
 get_os
 install_programs
+install_docker

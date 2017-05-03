@@ -11,6 +11,7 @@ ADD app_rsa /root/.ssh/id_rsa
 RUN touch /root/.ssh/known_hosts
 # Add bitbuckets key
 RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+RUN alalal
 
 RUN cd && git clone git@bitbucket.org:BramVlerick/clickshare-virt-env.git test_env
-#RUN sh /root/test_env/install_programs.sh
+RUN sh /root/test_env/install-programs.sh

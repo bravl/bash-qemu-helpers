@@ -1,6 +1,21 @@
 #!/bin/bash
 
 OS="Invalid"
+DEBUG="false"
+
+function install_docker {
+	if [ $OS == "Fedora" ]; then
+		dnf install -y docker
+	elif [ $OS == "Arch" ]; then
+		pacman -S docker --noconfirm --needed
+	elif [ $OS == "Ubuntu" ]; then
+		apt-get install -y docker
+	else
+		echo "Invalid OS"
+	fi
+	echo "Running docker"
+	systemctl start docker
+}
 
 function check_root {
 	if [ $(id -u) != "0" ]; then
@@ -10,7 +25,6 @@ function check_root {
 }
 
 function get_os {
-	echo "Installing Programs"
 	echo "Checking OS"
 	dnf > /dev/null 2>&1
 	if [ $? -eq 1 ] 
@@ -32,7 +46,7 @@ function get_os {
 		echo "Arch Linux detected";
 		OS="Arch"
 	fi
-	
+
 	if [ $OS == "Invalid" ]
 	then
 		echo "Couldn't detect OS"
@@ -41,9 +55,10 @@ function get_os {
 }
 
 function install_programs {
+	echo "Install Programs"
 	if [ $OS == "Arch" ]
 	then
-		pacman -S --noconfirm qemu qemu-arch-extra libvirt git make cmake curl
+		pacman -S --noconfirm --needed qemu qemu-arch-extra libvirt git make cmake curl
 	fi
 
 	if [ $OS == "Fedora" ]
@@ -57,7 +72,35 @@ function install_programs {
 	fi
 }
 
-#retrieve OS
 check_root
+while [[ $# -gt 0 ]]
+do
+	key="$1"
+
+	case $key in
+		-d|--debug)
+			echo "Enabling debugging"
+			DEBUG="true"
+			;;
+		--nfs)
+			echo "Enabling nfs"
+			if [ ! -d $2 ]; then
+				echo "Invalid path"
+				exit 1
+			else
+				echo "Path found"
+			fi
+			shift
+			;;
+		*)
+			echo "Invalid parameter $key"
+			# unknown option
+			;;
+	esac
+	shift # past argument or value
+done
 get_os
 install_programs
+if [ $DEBUG == "true" ]; then
+	install_docker
+fi

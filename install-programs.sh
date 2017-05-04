@@ -50,6 +50,11 @@ function install_programs {
 	then
 		dnf install -y qemu qemu-system-* make cmake curl
 	fi
+
+	if [ $OS == "Ubuntu" ]
+	then
+		apt-get install -y qemu qemu-system-* make cmake curl
+	fi
 }
 
 #retrieve OS

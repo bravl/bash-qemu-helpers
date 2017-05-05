@@ -82,16 +82,6 @@ do
 			echo "Enabling debugging"
 			DEBUG="true"
 			;;
-		--nfs)
-			echo "Enabling nfs"
-			if [ ! -d $2 ]; then
-				echo "Invalid path"
-				exit 1
-			else
-				echo "Path found"
-			fi
-			shift
-			;;
 		*)
 			echo "Invalid parameter $key"
 			# unknown option

@@ -6,6 +6,7 @@ BZIMAGE="./bzImage"
 KERNPATH=""
 ARCH="x86_64"
 CMD="qemu-system-$ARCH"
+GRAPHICS="--nographic"
 
 while [[ $# -gt 0 ]]
 do
@@ -43,6 +44,10 @@ do
 				exit 1
 			fi
 			;;
+		-g|--graphics)
+			GRAPHICS=""
+			shift
+			;;
 		-a|--arch)
 			ARCH=$2
 			if [ $ARCH == "x86" ]; then
@@ -79,6 +84,6 @@ if [ $KERNEL != prebuild ]; then
 	esac
 fi
 
-FULLCMD="$CMD -kernel $BZIMAGE --nographic --enable-kvm -append \"console=ttyS0\""
+FULLCMD="$CMD -kernel $BZIMAGE $GRAPHICS --enable-kvm -append \"console=ttyS0\""
 echo "$FULLCMD"
-#$FULLCMD
+$FULLCMD

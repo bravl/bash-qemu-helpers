@@ -1,3 +1,5 @@
+busybox
+initramfs-busybox-x86.cpio.gz
 *.swp
 app_rsa
 app_rsa.pub

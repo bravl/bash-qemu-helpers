@@ -4,6 +4,7 @@ DEBUG=""
 KERNEL="prebuild"
 BZIMAGE="./bzImage"
 KERNPATH=""
+IMAGEPATH=""
 ARCH="x86_64"
 CMD="qemu-system-$ARCH"
 GRAPHICS="--nographic"
@@ -37,6 +38,7 @@ do
 			;;
 		-i|--image)
 			if [ -f $2 ]; then
+				IMAGEPATH="-hda "$2
 				echo "Setting image path $2"
 				shift
 			else
@@ -84,6 +86,6 @@ if [ $KERNEL != prebuild ]; then
 	esac
 fi
 
-FULLCMD="$CMD -kernel $BZIMAGE $GRAPHICS --enable-kvm -append \"console=ttyS0\""
+FULLCMD="$CMD -kernel $BZIMAGE $IMAGEPATH $GRAPHICS --enable-kvm -append \"console=ttyS0 root=/dev/sda\""
 echo "$FULLCMD"
 $FULLCMD

@@ -2,7 +2,7 @@
 
 DEBUG=""
 KERNEL="prebuild"
-BZIMAGE="./bzImage"
+BZIMAGE="./bzImage-x86"
 KERNPATH=""
 IMAGEPATH=""
 INITRDPATH=""

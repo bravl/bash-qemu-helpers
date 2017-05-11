@@ -5,9 +5,11 @@ KERNEL="prebuild"
 BZIMAGE="./bzImage"
 KERNPATH=""
 IMAGEPATH=""
+INITRDPATH=""
 ARCH="x86_64"
 CMD="qemu-system-$ARCH"
 GRAPHICS="--nographic"
+ROOTAPPEND=""
 
 while [[ $# -gt 0 ]]
 do
@@ -39,6 +41,7 @@ do
 		-i|--image)
 			if [ -f $2 ]; then
 				IMAGEPATH="-hda "$2
+				ROOTAPPEND=" root=/dev/sda"
 				echo "Setting image path $2"
 				shift
 			else
@@ -46,6 +49,16 @@ do
 				exit 1
 			fi
 			;;
+		-ir|--initram)
+			if [ -f $2 ]; then
+				INITRDPATH="-initrd "$2
+				echo "Setting image path $2"
+				shift
+			else
+				echo "Invalid image path $2"
+				exit 1
+			fi
+			;;	
 		-g|--graphics)
 			GRAPHICS=""
 			shift
@@ -86,6 +99,6 @@ if [ $KERNEL != prebuild ]; then
 	esac
 fi
 
-FULLCMD="$CMD -kernel $BZIMAGE $IMAGEPATH $GRAPHICS --enable-kvm -append \"console=ttyS0 root=/dev/sda\""
+FULLCMD="$CMD -kernel $BZIMAGE $IMAGEPATH $INITRDPATH $GRAPHICS --enable-kvm -append \"console=ttyS0$ROOTAPPEND\""
 echo "$FULLCMD"
 $FULLCMD

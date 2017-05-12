@@ -41,7 +41,7 @@ do
 		-i|--image)
 			if [ -f $2 ]; then
 				IMAGEPATH="-hda "$2
-				ROOTAPPEND=" root=/dev/sda"
+				ROOTAPPEND="root=/dev/sda"
 				echo "Setting image path $2"
 				shift
 			else
@@ -99,6 +99,6 @@ if [ $KERNEL != prebuild ]; then
 	esac
 fi
 
-FULLCMD="$CMD -kernel $BZIMAGE $IMAGEPATH $INITRDPATH $GRAPHICS --enable-kvm -append \"console=ttyS0$ROOTAPPEND\""
+FULLCMD="$CMD -kernel $BZIMAGE $IMAGEPATH $INITRDPATH $GRAPHICS --enable-kvm -append \"$ROOTAPPEND console=ttyS0\""
 echo "$FULLCMD"
 $FULLCMD

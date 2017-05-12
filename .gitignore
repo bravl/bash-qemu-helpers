@@ -1,3 +1,5 @@
+debian-img/
+debian.img
 busybox
 initramfs-busybox-x86.cpio.gz
 *.swp

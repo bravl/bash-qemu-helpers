@@ -45,4 +45,14 @@ if [ $TYPE == "busybox" ]; then
 
 elif [ $TYPE == "debian" ]; then
 	echo "Creating debian image"
+	IMG=qemu-image.img
+	DIR=mount-point.dir
+	qemu-img create debian.img 1g
+	mkfs.ext2 debian.img
+	mkdir debian-img
+	sudo mount -o loop debian.img debian-img
+	sudo debootstrap --arch amd64 jessie debian-img
+	sudo umount debian-img
+	# Keeping the directory is not necessary. However it's usefull to move files to the image
+	rmdir debian-img
 fi

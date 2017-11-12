@@ -47,7 +47,7 @@ elif [ $TYPE == "debian" ]; then
 	echo "Creating debian image"
 	IMG=qemu-image.img
 	DIR=mount-point.dir
-	qemu-img create debian.img 1g
+	qemu-img create debian.img 15g
 	mkfs.ext2 debian.img
 	mkdir debian-img
 	sudo mount -o loop debian.img debian-img

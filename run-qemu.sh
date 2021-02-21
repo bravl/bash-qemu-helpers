@@ -99,6 +99,6 @@ if [ $KERNEL != prebuild ]; then
 	esac
 fi
 
-FULLCMD="$CMD -kernel $BZIMAGE $IMAGEPATH $INITRDPATH $GRAPHICS -redir tcp:2222::22 --enable-kvm -append \"$ROOTAPPEND console=ttyS0 vga=0x0343\""
+FULLCMD="$CMD -kernel $BZIMAGE $IMAGEPATH $INITRDPATH $GRAPHICS -device e1000,netdev=enp2s0 -netdev user,id=enp2s0,hostfwd=tcp::2222-:22 --enable-kvm -append \"$ROOTAPPEND console=ttyS0 vga=0x0343\""
 echo "$FULLCMD"
 eval $FULLCMD
